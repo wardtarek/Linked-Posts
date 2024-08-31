@@ -41,6 +41,8 @@ const style = {
   display: "flex",
   justifyContent: "center",
 };
+
+
 const Page = ({ params }: any) => {
   const { post } = useSelector((store: any) => store.commentsSlice);
   const { profile } = useSelector((store: any) => store.authSlice);
@@ -99,7 +101,7 @@ const Page = ({ params }: any) => {
     dispatch(getAllComments(params.id)).then(() => {
       dispatch(getUserData());
     });
-  }, []);
+  }, [dispatch, params]);
 
   return (
     <>

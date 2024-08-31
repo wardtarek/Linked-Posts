@@ -65,7 +65,7 @@ const Page = () => {
     dispatch(getAllPosts()).then(() => {
       dispatch(getUserData());
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
