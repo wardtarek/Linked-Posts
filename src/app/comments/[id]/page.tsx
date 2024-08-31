@@ -18,6 +18,7 @@ import {
   IconButton,
   Modal,
   Snackbar,
+  SnackbarOrigin,
   Typography,
 } from "@mui/material";
 import React, { useEffect } from "react";
@@ -43,12 +44,15 @@ const style = {
 };
 
 
-const Page = ({ params }: any) => {
+
+const Page = ({ params }: { params: any }) => {
   const { post } = useSelector((store: any) => store.commentsSlice);
   const { profile } = useSelector((store: any) => store.authSlice);
-  const dispatch = useDispatch<typeof store.dispatch>();
-  const user = profile?._id;
 
+  const dispatch = useDispatch<typeof store.dispatch>();
+
+  const user = profile?._id;
+  console.log(user);
   // ALERT
   const [openAlert, setOpenAlert] = React.useState(false);
   const [alertMessage, setAlertMessage] = React.useState("");
