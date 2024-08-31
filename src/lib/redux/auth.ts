@@ -43,7 +43,7 @@ export const uploadProfilePic = createAsyncThunk(
     let formData = new FormData();
     formData.append("photo", data)
     try {
-      const res = await axios.patch(
+      const res = await axios.put(
         "https://linked-posts.routemisr.com/users/upload-photo",
         formData,
         {

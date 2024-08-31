@@ -14,7 +14,7 @@ import PostAddIcon from "@mui/icons-material/PostAdd";
 
 const Page = () => {
   const dispatch = useDispatch<typeof store.dispatch>();
-  const { posts } = useSelector((store) => store.postsSlice);
+  const { posts } = useSelector((store: any) => store.postsSlice);
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
     clipPath: "inset(50%)",
@@ -118,7 +118,7 @@ const Page = () => {
                     Upload Photo
                     <VisuallyHiddenInput
                       type="file"
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         setImagePost(e.target.files[0]);
                       }}
                       multiple
@@ -131,7 +131,7 @@ const Page = () => {
               }
             />
           </Box>
-          {posts.map((post, idx) => (
+          {posts.map((post: object, idx:number) => (
             <Post key={idx} post={post} />
           ))}
         </Box>

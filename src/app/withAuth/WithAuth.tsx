@@ -2,9 +2,9 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
-const WithAuth = (Component: any) => {
+function WithAuth(Component: any) {
+  const router = useRouter();
   return (props: any) => {
-    const router = useRouter();
     useEffect(() => {
       if (localStorage.getItem("tkn") == null) {
         router.push("/login");
@@ -15,6 +15,6 @@ const WithAuth = (Component: any) => {
     }
     return <Component {...props} />;
   };
-};
+}
 
 export default WithAuth;

@@ -36,7 +36,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-export default function Post({ post }) {
+export default function Post({ post }: any) {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -60,7 +60,7 @@ export default function Post({ post }) {
     setOpenAlert(false);
   };
   // ADD COMMENT
-  function addComment(id) {
+  function addComment(id: string) {
     const data = { content: comment, post: id };
     dispatch(createComment(data)).then((res) => {
       setAlertMessage("Your comment is added");

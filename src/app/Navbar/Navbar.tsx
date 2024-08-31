@@ -299,8 +299,8 @@ function Navbar() {
                             Upload photo
                             <VisuallyHiddenInput
                               type="file"
-                              onChange={(e) => {
-                                dispatch(
+                              onChange={(e:any) => {
+                                dispatch(                                  
                                   uploadProfilePic(e.target.files[0])
                                 ).then((res: any) => {
                                   if (res.payload.message == "success") {

@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const getAllComments = createAsyncThunk(
   "comments/getAllComments",
-  async function (id) {
+  async function (id:string) {
     try {
       const { data } = await axios.get(
         `https://linked-posts.routemisr.com/posts/${id}`,
@@ -21,7 +21,7 @@ export const getAllComments = createAsyncThunk(
 );
 export const createComment = createAsyncThunk(
   "comments/createComment",
-  async function (data) {
+  async function (data:object) {
     try {
       const res = await axios.post(
         "https://linked-posts.routemisr.com/comments",

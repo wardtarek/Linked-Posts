@@ -18,19 +18,15 @@ import {
   IconButton,
   Modal,
   Snackbar,
-  SnackbarOrigin,
   Typography,
 } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
 import LoadingPage from "@/app/LoadingPage/LoadingPage";
 import { SnackbarCloseReason, Textarea } from "@mui/joy";
-import { jwtDecode } from "jwt-decode";
-import toast from "react-hot-toast";
+import { getUserData } from "@/lib/redux/auth";
 
 const style = {
   position: "absolute" as "absolute",
@@ -45,10 +41,11 @@ const style = {
   display: "flex",
   justifyContent: "center",
 };
-const Page = ({ params }) => {
+const Page = ({ params }: any) => {
   const { post } = useSelector((store: any) => store.commentsSlice);
+  const { profile } = useSelector((store: any) => store.authSlice);
   const dispatch = useDispatch<typeof store.dispatch>();
-  const { user } = jwtDecode(localStorage.getItem("tkn"));
+  const user = profile?._id;
 
   // ALERT
   const [openAlert, setOpenAlert] = React.useState(false);
@@ -99,7 +96,9 @@ const Page = ({ params }) => {
   const handleCloseModal = () => setOpenModal(false);
 
   useEffect(() => {
-    dispatch(getAllComments(params.id));
+    dispatch(getAllComments(params.id)).then(() => {
+      dispatch(getUserData());
+    });
   }, []);
 
   return (
@@ -118,7 +117,7 @@ const Page = ({ params }) => {
           {alertMessage}
         </Alert>
       </Snackbar>
-      {post != null ? (
+      {post != null && profile != null ? (
         <Box
           sx={{
             width: { sm: "80%", md: "60%" },
@@ -169,7 +168,7 @@ const Page = ({ params }) => {
               <Typography variant="h6" sx={{ fontWeight: "bold", m: 1 }}>
                 Comments
               </Typography>
-              {post.comments.map((comment, idx) => (
+              {post.comments.map((comment: any, idx: number) => (
                 <Card
                   sx={{ width: "100%", backgroundColor: "#eee", my: 2 }}
                   key={idx}

@@ -21,7 +21,7 @@ export const getAllPosts = createAsyncThunk(
 );
 export const createPost = createAsyncThunk(
   "posts/createPost",
-  async function (data: [string, object|null]) {
+  async function (data: [string, any]) {
     let formData = new FormData();
     formData.append("body", data[0]);
 
