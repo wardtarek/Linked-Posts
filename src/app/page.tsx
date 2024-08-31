@@ -1,95 +1,145 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import { Alert, Box, Button, Snackbar, styled } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import Post from "./post/Post";
+import { useDispatch, useSelector } from "react-redux";
+import { createPost, getAllPosts } from "@/lib/redux/posts";
+import { store } from "@/lib/redux/store";
+import WithAuth from "./withAuth/WithAuth";
+import LoadingPage from "./LoadingPage/LoadingPage";
+import { SnackbarCloseReason, Textarea } from "@mui/joy";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import { getUserData } from "@/lib/redux/auth";
+import PostAddIcon from "@mui/icons-material/PostAdd";
 
-export default function Home() {
+const Page = () => {
+  const dispatch = useDispatch<typeof store.dispatch>();
+  const { posts } = useSelector((store) => store.postsSlice);
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
+    height: 1,
+    overflow: "hidden",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    whiteSpace: "nowrap",
+    width: 1,
+  });
+  // ALERT
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const [alertMessage, setAlertMessage] = React.useState("");
+
+  const handleCloseAlert = (
+    event?: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
+  // CREATE POST
+  const [contentPost, setContentPost] = useState("");
+  const [imagePost, setImagePost] = useState(null);
+
+  function addPost() {
+    const data: [string, object | null] = [contentPost, imagePost];
+    dispatch(createPost(data)).then((res: any) => {
+      console.log(res);
+
+      if (res.payload.data.message == "success") {
+        dispatch(getAllPosts()).then(() => {
+          setAlertMessage("Your Post is created");
+          setOpenAlert(true);
+        });
+      } else {
+        setAlertMessage("There is an error");
+        setOpenAlert(true);
+      }
+    });
+  }
+
+  useEffect(() => {
+    dispatch(getAllPosts()).then(() => {
+      dispatch(getUserData());
+    });
+  }, []);
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+    <>
+      <Snackbar
+        open={openAlert}
+        autoHideDuration={3000}
+        onClose={handleCloseAlert}
+      >
+        <Alert
+          onClose={handleCloseAlert}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {alertMessage}
+        </Alert>
+      </Snackbar>
+      {posts.length > 0 ? (
+        <Box
+          sx={{ width: { sm: "80%", md: "60%" }, p: 2, margin: "110px auto" }}
+        >
+          <Box sx={{ marginBottom: "30px" }}>
+            <Textarea
+              sx={{ p: 1 }}
+              disabled={false}
+              minRows={2}
+              size="md"
+              variant="outlined"
+              placeholder="What's on your mind?"
+              onChange={(e) => {
+                setContentPost(e.target.value);
+              }}
+              endDecorator={
+                <Box
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Button
+                    component="label"
+                    role={undefined}
+                    variant="outlined"
+                    tabIndex={-1}
+                    startIcon={<AddAPhotoIcon />}
+                    sx={{ ml: 1 }}
+                  >
+                    Upload Photo
+                    <VisuallyHiddenInput
+                      type="file"
+                      onChange={(e) => {
+                        setImagePost(e.target.files[0]);
+                      }}
+                      multiple
+                    />
+                  </Button>
+                  <Button variant="contained" onClick={addPost}>
+                    <PostAddIcon /> Post
+                  </Button>
+                </Box>
+              }
             />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+          </Box>
+          {posts.map((post, idx) => (
+            <Post key={idx} post={post} />
+          ))}
+        </Box>
+      ) : (
+        <LoadingPage />
+      )}
+    </>
   );
-}
+};
+
+export default WithAuth(Page);
