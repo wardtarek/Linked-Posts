@@ -83,7 +83,9 @@ function Navbar() {
   const router = useRouter();
   function handleLogout() {
     dispatch(logout());
-    localStorage.removeItem("tkn");
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("tkn");
+    }
     router.push("/login");
   }
   // ALERT
@@ -299,8 +301,8 @@ function Navbar() {
                             Upload photo
                             <VisuallyHiddenInput
                               type="file"
-                              onChange={(e:any) => {
-                                dispatch(                                  
+                              onChange={(e: any) => {
+                                dispatch(
                                   uploadProfilePic(e.target.files[0])
                                 ).then((res: any) => {
                                   if (res.payload.message == "success") {

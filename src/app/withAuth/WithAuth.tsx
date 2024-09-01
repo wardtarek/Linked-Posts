@@ -3,9 +3,9 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 const WithAuth = (Component: any) => {
-  if (typeof window.localStorage !== "undefined") {
+  const router = useRouter();
+  if (typeof window !== "undefined") {
     if (localStorage.getItem("tkn") == null) {
-      const router = useRouter();
       router.push("/login");
       return null;
     }

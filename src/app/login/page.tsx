@@ -1,14 +1,7 @@
 "use client";
 import { login } from "@/lib/redux/auth";
 import { store } from "@/lib/redux/store";
-import {
-  Alert,
-  Box,
-  Button,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Alert, Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -16,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 
 const Page = () => {
-
   const { token } = useSelector(function (store: any) {
     return store.authSlice;
   });
@@ -43,7 +35,9 @@ const Page = () => {
     onSubmit: function (values) {
       dispatch(login(values)).then((res: any) => {
         if (res.payload.message == "success") {
-          localStorage.setItem("tkn", res.payload.token);
+          if (typeof window !== "undefined") {
+            localStorage.setItem("tkn", res.payload.token);
+          }
           router.push("/");
         }
       });
