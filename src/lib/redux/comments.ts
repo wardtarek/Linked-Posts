@@ -9,7 +9,7 @@ export const getAllComments = createAsyncThunk(
         `https://linked-posts.routemisr.com/posts/${id}`,
         {
           headers: {
-            token: localStorage?.getItem("tkn"),
+            token: localStorage.getItem("tkn"),
           },
         }
       );
@@ -28,7 +28,7 @@ export const createComment = createAsyncThunk(
         data,
         {
           headers: {
-            token: localStorage?.getItem("tkn"),
+            token: localStorage.getItem("tkn"),
           },
         }
       );
@@ -49,7 +49,7 @@ export const updateComment = createAsyncThunk(
         content,
         {
           headers: {
-            token: localStorage?.getItem("tkn"),
+            token: localStorage.getItem("tkn"),
           },
         }
       );

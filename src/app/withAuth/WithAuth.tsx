@@ -3,12 +3,14 @@ import { useRouter } from 'next/navigation';
 import React from 'react'
 
 const WithAuth = (Component: any) => {
-  
-  if (localStorage?.getItem("tkn") == null) {
-    const router = useRouter();
-    router.push("/login");
-    return null
+  if (typeof window !== "undefined") {
+    if (window.localStorage.getItem("tkn") == null) {
+      const router = useRouter();
+      router.push("/login");
+      return null;
+    }
   }
+
   return (props: any)=> <Component {...props} />;
 };
 

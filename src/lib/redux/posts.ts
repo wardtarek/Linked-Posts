@@ -9,7 +9,7 @@ export const getAllPosts = createAsyncThunk(
         "https://linked-posts.routemisr.com/posts?limit=50",
         {
           headers: {
-            token: localStorage?.getItem("tkn"),
+            token: localStorage.getItem("tkn"),
           },
         }
       );
@@ -35,7 +35,7 @@ export const createPost = createAsyncThunk(
         formData,
         {
           headers: {
-            token: localStorage?.getItem("tkn"),
+            token: localStorage.getItem("tkn"),
           },
         }
       );
