@@ -41,14 +41,14 @@ export const uploadProfilePic = createAsyncThunk(
   "auth/uploadProfilePic",
   async function (data: any) {
     let formData = new FormData();
-    formData.append("photo", data)
+    formData.append("photo", data);
     try {
       const res = await axios.put(
         "https://linked-posts.routemisr.com/users/upload-photo",
         formData,
         {
           headers: {
-            token: localStorage.getItem("tkn"),
+            token: window.localStorage.getItem("tkn"),
           },
         }
       );
@@ -66,7 +66,7 @@ export const getUserData = createAsyncThunk(
         "https://linked-posts.routemisr.com/users/profile-data",
         {
           headers: {
-            token: localStorage.getItem("tkn"),
+            token: window.localStorage.getItem("tkn"),
           },
         }
       );
@@ -78,7 +78,8 @@ export const getUserData = createAsyncThunk(
 );
 
 const initialState: { token: null | string; profile: null | object } = {
-  token: typeof window !== "undefined" ? window.localStorage.getItem("tkn") : null,
+  token:
+    typeof window !== "undefined" ? window.localStorage.getItem("tkn") : null,
   profile: null,
 };
 const authSlice = createSlice({
