@@ -76,8 +76,9 @@ export const getUserData = createAsyncThunk(
     }
   }
 );
+const tkn:null|string = localStorage.getItem("tkn");
 const initialState: { token: null | string; profile: null | object } = {
-  token: localStorage.getItem("tkn"),
+  token: tkn,
   profile: null,
 };
 const authSlice = createSlice({
