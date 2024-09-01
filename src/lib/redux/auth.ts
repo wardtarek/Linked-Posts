@@ -48,7 +48,7 @@ export const uploadProfilePic = createAsyncThunk(
         formData,
         {
           headers: {
-            token: localStorage.getItem("tkn"),
+            token: localStorage?.getItem("tkn"),
           },
         }
       );
@@ -66,7 +66,7 @@ export const getUserData = createAsyncThunk(
         "https://linked-posts.routemisr.com/users/profile-data",
         {
           headers: {
-            token: localStorage.getItem("tkn"),
+            token: localStorage?.getItem("tkn"),
           },
         }
       );

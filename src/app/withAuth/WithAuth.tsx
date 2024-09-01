@@ -3,8 +3,9 @@ import { useRouter } from 'next/navigation';
 import React from 'react'
 
 const WithAuth = (Component: any) => {
-  const router = useRouter();
-  if (localStorage.getItem("tkn") == null) {
+  
+  if (localStorage?.getItem("tkn") == null) {
+    const router = useRouter();
     router.push("/login");
     return null
   }
@@ -13,7 +14,7 @@ const WithAuth = (Component: any) => {
 
 export default WithAuth
 
-// "use client";
+
 // import { useRouter } from "next/navigation";
 // import React, { useEffect } from "react";
 
