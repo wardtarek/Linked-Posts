@@ -1,4 +1,4 @@
-"use client"
+
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -10,7 +10,7 @@ export const getAllComments = createAsyncThunk(
         `https://linked-posts.routemisr.com/posts/${id}`,
         {
           headers: {
-            token:typeof window !== "undefined" ? window.localStorage.getItem("tkn") : null,
+            token:typeof window !== "undefined" ? localStorage.getItem("tkn") : null,
           },
         }
       );
@@ -29,7 +29,7 @@ export const createComment = createAsyncThunk(
         data,
         {
           headers: {
-            token:typeof window !== "undefined" ? window.localStorage.getItem("tkn") : null,
+            token:typeof window !== "undefined" ? localStorage.getItem("tkn") : null,
           },
         }
       );
@@ -50,7 +50,7 @@ export const updateComment = createAsyncThunk(
         content,
         {
           headers: {
-            token:typeof window !== "undefined" ? window.localStorage.getItem("tkn") : null,
+            token:typeof window !== "undefined" ? localStorage.getItem("tkn") : null,
           },
         }
       );

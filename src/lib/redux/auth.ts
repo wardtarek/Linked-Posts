@@ -1,4 +1,4 @@
-"use client"
+
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import posts from "./posts";
@@ -51,7 +51,7 @@ export const uploadProfilePic = createAsyncThunk(
           headers: {
             token:
               typeof window !== "undefined"
-                ? window.localStorage.getItem("tkn")
+                ? localStorage.getItem("tkn")
                 : null,
           },
         }
@@ -72,7 +72,7 @@ export const getUserData = createAsyncThunk(
           headers: {
             token:
               typeof window !== "undefined"
-                ? window.localStorage.getItem("tkn")
+                ? localStorage.getItem("tkn")
                 : null,
           },
         }
@@ -86,7 +86,7 @@ export const getUserData = createAsyncThunk(
 
 const initialState: { token: null | string; profile: null | object } = {
   token:
-    typeof window !== "undefined" ? window.localStorage.getItem("tkn") : null,
+    typeof window !== "undefined" ? localStorage.getItem("tkn") : null,
   profile: null,
 };
 const authSlice = createSlice({
