@@ -10,7 +10,7 @@ export const getAllPosts = createAsyncThunk(
         {
           headers: {
             token:
-              typeof localStorage !== "undefined"
+              typeof window.localStorage !== "undefined"
                 ? localStorage.getItem("tkn")
                 : null,
           },
@@ -39,7 +39,7 @@ export const createPost = createAsyncThunk(
         {
           headers: {
             token:
-              typeof localStorage !== "undefined"
+              typeof window.localStorage !== "undefined"
                 ? localStorage.getItem("tkn")
                 : null,
           },

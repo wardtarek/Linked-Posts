@@ -10,7 +10,7 @@ export const getAllComments = createAsyncThunk(
         {
           headers: {
             token:
-              typeof localStorage !== "undefined"
+              typeof window.localStorage !== "undefined"
                 ? localStorage.getItem("tkn")
                 : null,
           },
@@ -32,7 +32,7 @@ export const createComment = createAsyncThunk(
         {
           headers: {
             token:
-              typeof localStorage !== "undefined"
+              typeof window.localStorage !== "undefined"
                 ? localStorage.getItem("tkn")
                 : null,
           },
@@ -56,7 +56,7 @@ export const updateComment = createAsyncThunk(
         {
           headers: {
             token:
-              typeof localStorage !== "undefined"
+              typeof window.localStorage !== "undefined"
                 ? localStorage.getItem("tkn")
                 : null,
           },

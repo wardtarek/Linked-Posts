@@ -49,7 +49,7 @@ export const uploadProfilePic = createAsyncThunk(
         {
           headers: {
             token:
-              typeof localStorage !== "undefined"
+              typeof window.localStorage !== "undefined"
                 ? localStorage.getItem("tkn")
                 : null,
           },
@@ -70,7 +70,7 @@ export const getUserData = createAsyncThunk(
         {
           headers: {
             token:
-              typeof localStorage !== "undefined"
+              typeof window.localStorage !== "undefined"
                 ? localStorage.getItem("tkn")
                 : null,
           },
@@ -85,7 +85,7 @@ export const getUserData = createAsyncThunk(
 
 const initialState: { token: null | string; profile: null | object } = {
   token:
-    typeof localStorage !== "undefined" ? localStorage.getItem("tkn") : null,
+    typeof localStorage !== "undefined" ? window.localStorage.getItem("tkn") : null,
   profile: null,
 };
 const authSlice = createSlice({
