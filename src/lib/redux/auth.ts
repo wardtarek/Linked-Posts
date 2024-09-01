@@ -48,7 +48,10 @@ export const uploadProfilePic = createAsyncThunk(
         formData,
         {
           headers: {
-            token: window.localStorage.getItem("tkn"),
+            token:
+              typeof window !== "undefined"
+                ? window.localStorage.getItem("tkn")
+                : null,
           },
         }
       );
@@ -66,7 +69,10 @@ export const getUserData = createAsyncThunk(
         "https://linked-posts.routemisr.com/users/profile-data",
         {
           headers: {
-            token: window.localStorage.getItem("tkn"),
+            token:
+              typeof window !== "undefined"
+                ? window.localStorage.getItem("tkn")
+                : null,
           },
         }
       );
