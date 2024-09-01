@@ -1,9 +1,9 @@
 import React from "react";
 import PostPage from "./PostPage";
 
-export async function generateStaticParams() {
-  return [{id:"a"}]
-}
+// export async function generateStaticParams() {
+//   return [{id:"a"}]
+// }
 
 const page = ({ params }: any) => {
 
