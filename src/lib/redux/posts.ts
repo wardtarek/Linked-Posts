@@ -1,4 +1,3 @@
-
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -10,7 +9,10 @@ export const getAllPosts = createAsyncThunk(
         "https://linked-posts.routemisr.com/posts?limit=50",
         {
           headers: {
-            token: typeof window !== "undefined" ? localStorage.getItem("tkn") : null,
+            token:
+              typeof localStorage !== "undefined"
+                ? localStorage.getItem("tkn")
+                : null,
           },
         }
       );
@@ -26,17 +28,20 @@ export const createPost = createAsyncThunk(
     let formData = new FormData();
     formData.append("body", data[0]);
 
-    if (data[1]!=null) {
+    if (data[1] != null) {
       formData.append("image", data[1]);
     }
-    
+
     try {
       const res = await axios.post(
         "https://linked-posts.routemisr.com/posts",
         formData,
         {
           headers: {
-            token: typeof window !== "undefined" ? localStorage.getItem("tkn") : null,
+            token:
+              typeof localStorage !== "undefined"
+                ? localStorage.getItem("tkn")
+                : null,
           },
         }
       );

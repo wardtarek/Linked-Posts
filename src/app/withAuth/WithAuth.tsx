@@ -1,21 +1,19 @@
-"use client"
-import { useRouter } from 'next/navigation';
-import React from 'react'
+"use client";
+import { useRouter } from "next/navigation";
+import React from "react";
 
-const WithAuth = (Component: any) => {  
-    if (typeof window!=="undefined") {
-      if (localStorage.getItem("tkn") == null) {
-        const router = useRouter();
-        router.push("/login");
-        return null;
-      }
-      
+const WithAuth = (Component: any) => {
+  if (typeof localStorage !== "undefined") {
+    if (localStorage.getItem("tkn") == null) {
+      const router = useRouter();
+      router.push("/login");
+      return null;
     }
-  return (props: any)=> <Component {...props} />;
+  }
+  return (props: any) => <Component {...props} />;
 };
 
-export default WithAuth
-
+export default WithAuth;
 
 // import { useRouter } from "next/navigation";
 // import React, { useEffect } from "react";

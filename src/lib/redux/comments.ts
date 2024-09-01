@@ -1,16 +1,18 @@
-
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const getAllComments = createAsyncThunk(
   "comments/getAllComments",
-  async function (id:string) {
+  async function (id: string) {
     try {
       const { data } = await axios.get(
         `https://linked-posts.routemisr.com/posts/${id}`,
         {
           headers: {
-            token:typeof window !== "undefined" ? localStorage.getItem("tkn") : null,
+            token:
+              typeof localStorage !== "undefined"
+                ? localStorage.getItem("tkn")
+                : null,
           },
         }
       );
@@ -22,14 +24,17 @@ export const getAllComments = createAsyncThunk(
 );
 export const createComment = createAsyncThunk(
   "comments/createComment",
-  async function (data:object) {
+  async function (data: object) {
     try {
       const res = await axios.post(
         "https://linked-posts.routemisr.com/comments",
         data,
         {
           headers: {
-            token:typeof window !== "undefined" ? localStorage.getItem("tkn") : null,
+            token:
+              typeof localStorage !== "undefined"
+                ? localStorage.getItem("tkn")
+                : null,
           },
         }
       );
@@ -42,15 +47,18 @@ export const createComment = createAsyncThunk(
 export const updateComment = createAsyncThunk(
   "comments/updateComment",
   async function (updateData: [object, string]) {
-    const content= updateData[0]
-    const id= updateData[1] 
+    const content = updateData[0];
+    const id = updateData[1];
     try {
-      const {data} = await axios.put(
+      const { data } = await axios.put(
         `https://linked-posts.routemisr.com/comments/${id}`,
         content,
         {
           headers: {
-            token:typeof window !== "undefined" ? localStorage.getItem("tkn") : null,
+            token:
+              typeof localStorage !== "undefined"
+                ? localStorage.getItem("tkn")
+                : null,
           },
         }
       );
