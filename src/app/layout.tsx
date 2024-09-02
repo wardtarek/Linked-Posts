@@ -1,5 +1,4 @@
 "use client";
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./Navbar/Navbar";
@@ -16,7 +15,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" type="image/svg+xml" href="./favicon.ico" />
         <title>Linked Posts</title>
       </head>
       <body className={inter.className} suppressHydrationWarning={true}>

@@ -1,6 +1,7 @@
 "use client";
 import { register } from "@/lib/redux/auth";
 import { store } from "@/lib/redux/store";
+import { SnackbarCloseReason } from "@mui/joy";
 import {
   Alert,
   Box,
@@ -10,6 +11,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Snackbar,
   TextField,
   Typography,
 } from "@mui/material";
@@ -63,151 +65,184 @@ const Page = () => {
   const formik = useFormik({
     initialValues: user,
     onSubmit: function (values) {
-      dispatch(register(values)).then((res: any) => {
+      dispatch(register(values)).then((res: any) => {        
         if (res.payload.message == "success") {
           router.push("/login");
+        }else{
+          setAlertMessage(res.payload.response.data.error);
+          setOpenAlert(true);
         }
       });
     },
     validationSchema: validation,
   });
-  return (
-    <Box sx={{ margin: "110px auto", width: { sm: "80%", md: "50%" } }}>
-      <Typography component="h2" variant="h4" sx={{ margin: "10px 0px" }}>
-        Register :
-      </Typography>
-      <form onSubmit={formik.handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              id="name"
-              type="text"
-              label="Name"
-              size="small"
-              fullWidth
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.errors.name && formik.touched.name ? (
-              <Box sx={{ mt: 1 }}>
-                <Alert severity="error">{formik.errors.name}</Alert>
-              </Box>
-            ) : (
-              ""
-            )}
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              id="email"
-              type="email"
-              label="Email"
-              size="small"
-              fullWidth
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.errors.email && formik.touched.email ? (
-              <Box sx={{ mt: 1 }}>
-                <Alert severity="error">{formik.errors.email}</Alert>
-              </Box>
-            ) : (
-              ""
-            )}
-          </Grid>
+  // ALERT
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const [alertMessage, setAlertMessage] = React.useState("");
 
-          <Grid item xs={12}>
-            <TextField
-              id="password"
-              type="password"
-              label="Password"
-              size="small"
-              fullWidth
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.errors.password && formik.touched.password ? (
-              <Box sx={{ mt: 1 }}>
-                <Alert severity="error">{formik.errors.password}</Alert>
-              </Box>
-            ) : (
-              ""
-            )}
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              id="rePassword"
-              type="password"
-              label="rePassword"
-              size="small"
-              fullWidth
-              value={formik.values.rePassword}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.errors.rePassword && formik.touched.rePassword ? (
-              <Box sx={{ mt: 1 }}>
-                <Alert severity="error">{formik.errors.rePassword}</Alert>
-              </Box>
-            ) : (
-              ""
-            )}
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              id="dateOfBirth"
-              type="date"
-              size="small"
-              fullWidth
-              value={formik.values.dateOfBirth}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.errors.dateOfBirth && formik.touched.dateOfBirth ? (
-              <Box sx={{ mt: 1 }}>
-                <Alert severity="error">{formik.errors.dateOfBirth}</Alert>
-              </Box>
-            ) : (
-              ""
-            )}
-          </Grid>
-          <Grid item xs={6}>
-            <FormControl fullWidth size="small">
-              <InputLabel id="label">Gender</InputLabel>
-              <Select
-                id="gender"
+  const handleCloseAlert = (
+    event?: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
+  return (
+    <>
+      <Snackbar
+        open={openAlert}
+        autoHideDuration={5000}
+        onClose={handleCloseAlert}
+      >
+        <Alert
+          onClose={handleCloseAlert}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {alertMessage}
+        </Alert>
+      </Snackbar>
+      <Box sx={{ margin: "110px auto", width: { sm: "80%", md: "50%" } }}>
+        <Typography component="h2" variant="h4" sx={{ margin: "10px 0px" }}>
+          Register :
+        </Typography>
+        <form onSubmit={formik.handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                id="name"
                 type="text"
-                labelId="label"
-                label="Gender"
+                label="Name"
+                size="small"
                 fullWidth
-                value={formik.values.gender}
-                onChange={(e) => {
-                  formik.values.gender = e.target.value;
-                  formik.handleChange(e.target.value);
-                }}
-              >
-                <MenuItem value={"male"}>Male</MenuItem>
-                <MenuItem value={"female"}>Female</MenuItem>
-              </Select>
-            </FormControl>
-            {formik.errors.gender && formik.touched.gender ? (
-              <Box sx={{ mt: 1 }}>
-                <Alert severity="error">{formik.errors.gender}</Alert>
-              </Box>
-            ) : (
-              ""
-            )}
+                value={formik.values.name}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.errors.name && formik.touched.name ? (
+                <Box sx={{ mt: 1 }}>
+                  <Alert severity="error">{formik.errors.name}</Alert>
+                </Box>
+              ) : (
+                ""
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="email"
+                type="email"
+                label="Email"
+                size="small"
+                fullWidth
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.errors.email && formik.touched.email ? (
+                <Box sx={{ mt: 1 }}>
+                  <Alert severity="error">{formik.errors.email}</Alert>
+                </Box>
+              ) : (
+                ""
+              )}
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                id="password"
+                type="password"
+                label="Password"
+                size="small"
+                fullWidth
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.errors.password && formik.touched.password ? (
+                <Box sx={{ mt: 1 }}>
+                  <Alert severity="error">{formik.errors.password}</Alert>
+                </Box>
+              ) : (
+                ""
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="rePassword"
+                type="password"
+                label="rePassword"
+                size="small"
+                fullWidth
+                value={formik.values.rePassword}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.errors.rePassword && formik.touched.rePassword ? (
+                <Box sx={{ mt: 1 }}>
+                  <Alert severity="error">{formik.errors.rePassword}</Alert>
+                </Box>
+              ) : (
+                ""
+              )}
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                id="dateOfBirth"
+                type="date"
+                size="small"
+                fullWidth
+                value={formik.values.dateOfBirth}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.errors.dateOfBirth && formik.touched.dateOfBirth ? (
+                <Box sx={{ mt: 1 }}>
+                  <Alert severity="error">{formik.errors.dateOfBirth}</Alert>
+                </Box>
+              ) : (
+                ""
+              )}
+            </Grid>
+            <Grid item xs={6}>
+              <FormControl fullWidth size="small">
+                <InputLabel id="label">Gender</InputLabel>
+                <Select
+                  id="gender"
+                  type="text"
+                  labelId="label"
+                  label="Gender"
+                  fullWidth
+                  value={formik.values.gender}
+                  onChange={(e) => {
+                    formik.values.gender = e.target.value;
+                    formik.handleChange(e.target.value);
+                  }}
+                >
+                  <MenuItem value={"male"}>Male</MenuItem>
+                  <MenuItem value={"female"}>Female</MenuItem>
+                </Select>
+              </FormControl>
+              {formik.errors.gender && formik.touched.gender ? (
+                <Box sx={{ mt: 1 }}>
+                  <Alert severity="error">{formik.errors.gender}</Alert>
+                </Box>
+              ) : (
+                ""
+              )}
+            </Grid>
+            <Grid item sx={{ marginLeft: "auto" }}>
+              <Button type="submit" variant="contained">
+                Register
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item sx={{ marginLeft: "auto" }}>
-            <Button type="submit" variant="contained">
-              Register
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Box>
+        </form>
+      </Box>
+    </>
   );
 };
 
