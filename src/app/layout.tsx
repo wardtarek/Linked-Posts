@@ -17,7 +17,7 @@ export default function RootLayout({
       <head>
         <title>Linked Posts</title>
       </head>
-      <body className={inter.className} suppressHydrationWarning={true}>
+      <body className={inter.className} suppressHydrationWarning={true} style={{backgroundColor:"white"}}>
         <Provider store={store}>
           <Navbar />
           {children}

@@ -107,7 +107,7 @@ const Page = () => {
         </Alert>
       </Snackbar>
       <Box sx={{ margin: "100px auto", width: {xs:"90%", sm: "80%", md: "50%" } }}>
-        <Typography component="h2" variant="h4" sx={{ margin: "10px 0px" }}>
+        <Typography component="h2" variant="h4" sx={{ margin: "10px 0px", color:"black" }}>
           Register :
         </Typography>
         <form onSubmit={formik.handleSubmit}>
