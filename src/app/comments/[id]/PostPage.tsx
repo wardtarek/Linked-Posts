@@ -126,7 +126,7 @@ const PostPage = ({ params }: { params: any }) => {
           sx={{
             width: { sm: "80%", md: "60%" },
             p: 2,
-            margin: "110px auto",
+            margin: "80px auto",
           }}
         >
           <Card

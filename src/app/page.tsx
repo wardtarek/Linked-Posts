@@ -85,7 +85,7 @@ const Page = () => {
       </Snackbar>
       {posts.length > 0 ? (
         <Box
-          sx={{ width: { sm: "80%", md: "60%" }, p: 2, margin: "110px auto" }}
+          sx={{ width: { sm: "80%", md: "60%" }, p: 2, margin: "80px auto" }}
         >
           <Box sx={{ marginBottom: "30px" }}>
             <Textarea
