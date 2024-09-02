@@ -10,6 +10,7 @@ import { SnackbarCloseReason, Textarea } from "@mui/joy";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { getUserData } from "@/lib/redux/auth";
 import PostAddIcon from "@mui/icons-material/PostAdd";
+import withAuth from "./WithAuth/withAuth";
 
 const Page = () => {
   const dispatch = useDispatch<typeof store.dispatch>();
@@ -141,4 +142,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default withAuth(Page);
