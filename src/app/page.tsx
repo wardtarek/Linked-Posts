@@ -5,7 +5,6 @@ import Post from "./post/Post";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, getAllPosts } from "@/lib/redux/posts";
 import { store } from "@/lib/redux/store";
-import WithAuth from "./withAuth/WithAuth";
 import LoadingPage from "./LoadingPage/LoadingPage";
 import { SnackbarCloseReason, Textarea } from "@mui/joy";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
